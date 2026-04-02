@@ -2,8 +2,8 @@ import json
 from app.core import config
 
 def load_tasks():
-    if not config.DATA_FILE.exists():
-        config.DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
+    config.DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
+    if not config.DATA_FILE.exists(): 
         with open(config.DATA_FILE, "w", encoding="utf-8") as file:
             json.dump([], file)
         return []
@@ -16,6 +16,7 @@ def load_tasks():
 
 
 def save_tasks():
+    config.DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(config.DATA_FILE, "w", encoding="utf-8") as file:
         json.dump(tasks, file, indent=4)
 
