@@ -1,75 +1,197 @@
 # Task Management API
 
-RESTful API for managing tasks with authentication, role-based access control, and advanced querying.
+A full-stack AI-powered task management application built with FastAPI, PostgreSQL, React, and OpenAI API.
 
-Built with FastAPI, PostgreSQL, and SQLAlchemy.
-Goal: A production-like backend project with clean architecture and real-world features.
+Built as a production-like backend and AI engineering project with a strong focus on:
 
----
-
-## Features
-
-- RESTful API design
-- JWT authentication
-- Role-based access control
-- Full CRUD for tasks
-- User self-service endpoints
-- Admin user management endpoints
-- Filtering, pagination, sorting, and search
-- PostgreSQL + SQLAlchemy + Alembic
-- Tests with pytest
-- Docker-based setup
-
-### Users
-
-#### Self (Authenticated User)
-- `GET /users/me`
-- `PUT /users/me`
-- `PATCH /users/me`
-- `DELETE /users/me`
-
-#### Admin Only
-- `GET /users`
-- `GET /users/{id}`
-- `PUT /users/{id}`
-- `PATCH /users/{id}`
-- `DELETE /users/{id}`
-
-### Tasks
-- `POST /tasks`
-- `GET /tasks`
-- `GET /tasks/{id}`
-- `PUT /tasks/{id}`
-- `PATCH /tasks/{id}`
-- `DELETE /tasks/{id}`
-
-### Advanced Querying
-- Filtering (`completed=true/false`)
-- Pagination (`limit`, `offset`)
-- Sorting (`sort_by`, `order`)
-- Search (`search` in title/description)
-
-### Additional Features
-- Task ↔ User Relation (Foreign Key)
-- Validation with Pydantic
-- Error Handling (400 / 401 / 403 / 404 / 422)
-- PostgreSQL database
-- SQLAlchemy ORM
-- Alembic Migrations
-- Tests with pytest
-- Docker-based Setup
+* clean architecture
+* scalable backend structure
+* authentication
+* testing
+* Docker workflows
+* CI/CD
+* AI integrations
 
 ---
 
-## Tech Stack
+# Features
 
-- FastAPI
-- PostgreSQL
-- SQLAlchemy
-- Alembic
-- Pydantic
-- pytest
-- Docker
+## Backend
+
+* RESTful API design
+* JWT authentication
+* Role-based access control
+* Full CRUD for tasks
+* User self-service endpoints
+* Admin user management endpoints
+* Filtering, pagination, sorting, and search
+* PostgreSQL + SQLAlchemy + Alembic
+* Validation with Pydantic
+* Tests with pytest
+* Ruff linting
+* Docker-based setup
+* GitHub Actions CI
+
+## Frontend
+
+* React + TypeScript
+* React Query
+* Feature-based architecture
+* Reusable components
+* Custom hooks
+* Task creation/editing UI
+* Filtering and sorting
+* AI integration UI
+
+## AI Features
+
+### AI Task Improvement
+
+Improves a task title and description based on the user's input.
+
+Example:
+- short input: `fix login`
+- improved output: clearer title and more useful description
+
+### AI Task Planning
+
+Generates a practical execution plan for open tasks.
+
+The planning logic considers:
+
+- due dates
+- priority
+- urgency
+- estimated effort
+- possible task dependencies
+
+Tasks with deadlines are prioritized by due date. Tasks without due dates are still included and ordered by priority and estimated effort.
+
+### AI Task Grouping
+
+Groups open tasks into practical categories such as:
+
+- Work
+- Learning
+- Personal
+- Health
+- Admin
+
+This helps organize larger task lists into more manageable sections.
+
+---
+
+# Tech Stack
+
+## Backend
+
+* FastAPI
+* PostgreSQL
+* SQLAlchemy
+* Alembic
+* Pydantic
+* pytest
+* Ruff
+* Docker
+
+## Frontend
+
+* React
+* TypeScript
+* Vite
+* React Query
+
+## AI
+
+* OpenAI API
+* GPT-4o-mini
+
+---
+
+# API Endpoints
+
+## Authentication
+
+* `POST /auth/register`
+* `POST /auth/login`
+
+## Users
+
+### Self (Authenticated User)
+
+* `GET /users/me`
+* `PUT /users/me`
+* `PATCH /users/me`
+* `DELETE /users/me`
+
+### Admin Only
+
+* `GET /users`
+* `GET /users/{id}`
+* `PUT /users/{id}`
+* `PATCH /users/{id}`
+* `DELETE /users/{id}`
+
+## Tasks
+
+* `POST /tasks`
+* `GET /tasks`
+* `GET /tasks/{id}`
+* `PUT /tasks/{id}`
+* `PATCH /tasks/{id}`
+* `DELETE /tasks/{id}`
+
+## AI
+
+* `POST /ai/improve-task`
+* `POST /ai/tasks/{id}/improve`
+* `GET /ai/group-tasks`
+* `GET /ai/plan`
+
+---
+
+
+# Advanced Querying
+
+* Filtering (`completed=true/false`)
+* Pagination (`limit`, `offset`)
+* Sorting (`sort_by`, `order`)
+* Search (`search` in title/description)
+
+---
+
+# Project Structure
+
+```text
+project-root/
+├── backend/
+│   ├── alembic/          # Database migrations
+│   ├── app/              # FastAPI application
+│   │   ├── api/          # API routes
+│   │   ├── core/         # Config, database, security
+│   │   ├── models/       # SQLAlchemy models
+│   │   ├── schemas/      # Pydantic schemas
+│   │   └── services/     # Business logic
+│   ├── scripts/          # Utility scripts
+│   ├── tests/            # Pytest test suite
+│   ├── Dockerfile
+│   └── requirements*.txt
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── app/          # App setup, router, providers
+│   │   ├── features/     # Feature modules
+│   │   ├── lib/          # API client, env, query client
+│   │   └── styles/       # Global styles
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── .github/workflows/    # GitHub Actions CI
+├── compose.yaml
+├── compose.dev.yaml
+└── README.md
+```
 
 ---
 
@@ -87,7 +209,7 @@ cd task_management_api
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
-pip install -r requirements-dev.txt
+pip install -r backend/requirements-dev.txt
 ```
 
 ### 3. Create Environment Files
@@ -97,75 +219,91 @@ Generate a secure key for JWT authentication:
 ```bash
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
-Create the following three `.env` files and replace the placeholder values with your own:
+Create the following four `.env` files and replace the placeholder values with your own:
 
 - choose a secure password for the database
 - insert your generated `SECRET_KEY`
+- insert your OpenAI API key
 
-#### .env (PostgreSQL in Docker + JWT authentication)
+#### .env (Docker Compose / PostgreSQL)
 
 ```env
 POSTGRES_DB=taskdb
 POSTGRES_USER=taskuser
 POSTGRES_PASSWORD=your_password_here
+```
+
+#### backend/.env (FastAPI inside Docker)
+
+```env
 DATABASE_URL=postgresql://taskuser:your_password_here@db:5432/taskdb
 
 SECRET_KEY=your_secret_key_here
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+OPENAI_API_KEY=your_openai_key_here
 ```
 
-#### .env.local (for local tools like Alembic):
+#### backend/.env.local (for local tools like Alembic):
 
 ```env
 DATABASE_URL=postgresql://taskuser:your_password_here@localhost:5432/taskdb
+
+SECRET_KEY=your_secret_key_here
+ACCESS_TOKEN_EXPIRE_MINUTES=60
 ```
 
-#### .env.test (for pytest):
+#### backend/.env.test (for pytest):
 
 ```env
 DATABASE_URL=postgresql://taskuser:your_password_here@localhost:5432/taskdb_test
+
+SECRET_KEY=your_secret_key_here
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+```
+
+#### frontend/.env.local (Frontend API URL)
+
+```env
+VITE_API_URL=http://localhost:8000
 ```
 
 ### 4. Start Docker (Development Mode)
 
 ```bash
-docker compose -f compose.yaml -f compose.dev.yaml up --build
+docker compose --env-file ./backend/.env -f compose.yaml -f compose.dev.yaml up --build
 ```
 
 ### 5. Run Migrations
 
+In a separate terminal:
 ```bash
+cd backend
 alembic upgrade head
 ```
 
 ---
 
-## Authentication
+### Frontend Setup
 
-### Register
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Frontend runs at:
+http://localhost:5173
 
-    `POST /auth/register`
+Make sure the backend is running at:
 
-### Login
+http://localhost:8000
 
-    `POST /auth/login`
-
-### Using the Access Token
-
-After login, include the token in the request header:
-
-    Authorization: Bearer <access_token>
-
-Required for all protected endpoints (e.g. `/tasks`, `/users/me`)
-
-In Swagger UI, you can use the "Authorize" button to log in and automatically include the token.
-
----
 
 ## API Docs (Swagger)
 
-After starting the server, open:
+If you want to inspect or test the backend API directly, open:
 
-    http://localhost:8000/docs
+http://localhost:8000/docs
 
 Swagger UI provides interactive API documentation.
 
@@ -174,37 +312,34 @@ Steps:
 2. Click "Authorize" and log in
 3. Use protected endpoints (e.g. `/tasks`)
 
+Swagger UI automatically includes the access token after authorization.
+
 ## Admin
 
 Promote a user to admin:
-
-    python -m scripts.make_admin user@example.com
+```bash
+cd backend
+python -m scripts.make_admin user@example.com
+```
 
 ---
 
 ## Tests
 
 ```bash
-pytest
+cd backend
+pytest -v
 ```
 
 ---
 
-## Architecture
+## Linting
 
+```bash
+cd backend
+ruff check .
 ```
-project/
-├── app/
-│ ├── api/ # HTTP layer (FastAPI endpoints)
-│ ├── services/ # Business logic
-│ ├── models/ # Database models (SQLAlchemy)
-│ ├── schemas/ # Request/Response models (Pydantic)
-│ └── core/ # Config, security, database setup
-│
-├── scripts/ # Utility scripts (e.g. make_admin)
-├── tests/ # Test suite
-```
----
+
 
 ## Database
 
@@ -232,11 +367,11 @@ project/
 ### Standard:
 
 ```bash
-docker compose up --build
+docker compose --env-file ./backend/.env up --build
 ```
 
 ### Development (Hot Reload)
 
 ```bash
-docker compose -f compose.yaml -f compose.dev.yaml up --build
+docker compose --env-file ./backend/.env -f compose.yaml -f compose.dev.yaml up --build
 ```
