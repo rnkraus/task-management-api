@@ -49,7 +49,7 @@ export default function AiToolsPanel({
         </button>
 
         <button
-          className="button button-secondary"
+          className="button"
           type="button"
           onClick={onGroupTasks}
           disabled={isGroupingTasks}

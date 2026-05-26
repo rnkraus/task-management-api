@@ -42,36 +42,60 @@ export default function TaskForm({
       <h2 className="section-title">Create Task</h2>
 
       <form onSubmit={onSubmit} className="form-grid">
-        <input
-          className="input"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => onTitleChange(e.target.value)}
-        />
+        <div className="form-field">
+          <label className="label" htmlFor="task-title">
+            Title
+          </label>
+          <input
+            id="task-title"
+            className="input"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => onTitleChange(e.target.value)}
+          />
+        </div>
 
-        <textarea
-          className="textarea"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => onDescriptionChange(e.target.value)}
-        />
+        <div className="form-field">
+          <label className="label" htmlFor="task-description">
+            Description
+          </label>
+          <textarea
+            id="task-description"
+            className="textarea"
+            placeholder="Description"
+            value={description}
+            onChange={(e) => onDescriptionChange(e.target.value)}
+          />
+        </div>
 
-        <input
-          className="input"
-          type="datetime-local"
-          value={dueDate}
-          onChange={(e) => onDueDateChange(e.target.value)}
-        />
+        <div className="form-field">
+          <label className="label" htmlFor="task-due-date">
+            Due date
+          </label>
+          <input
+            id="task-due-date"
+            className="input"
+            type="datetime-local"
+            value={dueDate}
+            onChange={(e) => onDueDateChange(e.target.value)}
+          />
+        </div>
 
-        <select
-          className="select"
-          value={priority}
-          onChange={(e) => onPriorityChange(Number(e.target.value))}
-        >
-          <option value={1}>Low</option>
-          <option value={2}>Medium</option>
-          <option value={3}>High</option>
-        </select>
+        <div className="form-field">
+          <label className="label" htmlFor="task-priority">
+            Priority
+          </label>
+          <select
+            id="task-priority"
+            className="select"
+            value={priority}
+            onChange={(e) => onPriorityChange(Number(e.target.value))}
+          >
+            <option value={1}>Low</option>
+            <option value={2}>Medium</option>
+            <option value={3}>High</option>
+          </select>
+        </div>
 
         <div className="button-row">
           <button className="button" type="submit" disabled={isCreating}>

@@ -8,11 +8,13 @@ type Props = {
   editDueDate: string;
   editPriority: number;
   isUpdating: boolean;
+  isImprovingExistingTask: boolean;
   onToggleCompleted: (id: number, completed: boolean) => void;
   onStartEditing: (task: Task) => void;
   onCancelEditing: () => void;
   onSaveEdit: (taskId: number) => void;
   onDelete: (taskId: number) => void;
+  onImproveExistingTask: (taskId: number) => void;
   onEditTitleChange: (value: string) => void;
   onEditDescriptionChange: (value: string) => void;
   onEditDueDateChange: (value: string) => void;
@@ -27,11 +29,13 @@ export default function TaskList({
   editDueDate,
   editPriority,
   isUpdating,
+  isImprovingExistingTask,
   onToggleCompleted,
   onStartEditing,
   onCancelEditing,
   onSaveEdit,
   onDelete,
+  onImproveExistingTask,
   onEditTitleChange,
   onEditDescriptionChange,
   onEditDueDateChange,
@@ -104,6 +108,15 @@ export default function TaskList({
                     disabled={isUpdating}
                   >
                     {isUpdating ? "Saving..." : "Save"}
+                  </button>
+
+                  <button
+                    className="button button-secondary"
+                    type="button"
+                    onClick={() => onImproveExistingTask(task.id)}
+                    disabled={isImprovingExistingTask}
+                  >
+                    {isImprovingExistingTask ? "Improving..." : "Improve with AI"}
                   </button>
 
                   <button

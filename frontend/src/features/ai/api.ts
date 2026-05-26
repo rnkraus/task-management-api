@@ -17,6 +17,13 @@ export async function improveTask(
   return res.data;
 }
 
+export async function improveExistingTask(
+  taskId: number
+): Promise<ImproveTaskResponse> {
+  const res = await api.post(`/ai/tasks/${taskId}/improve`);
+  return res.data;
+}
+
 export async function getTaskPlan(): Promise<TaskPlanResponse> {
   const res = await api.get("/ai/plan");
   return res.data;

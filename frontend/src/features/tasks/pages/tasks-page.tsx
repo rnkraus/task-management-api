@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import { useCurrentUser } from "../../auth/hooks/use-current-user";
-import { useAiTools } from "../../ai/hooks/use-ai-tools";
 import AiToolsPanel from "../../ai/components/ai-tools-panel";
+import { useAiTools } from "../../ai/hooks/use-ai-tools";
+import { useCurrentUser } from "../../auth/hooks/use-current-user";
 
-import TaskForm from "../components/task-form";
 import TaskFilters from "../components/task-filters";
+import TaskForm from "../components/task-form";
 import TaskList from "../components/task-list";
 import { useTaskMutations } from "../hooks/use-task-mutations";
 import { useTaskQuery } from "../hooks/use-tasks";
@@ -69,8 +69,12 @@ export default function TasksPage() {
     deleteTaskMutation,
   } = useTaskMutations();
 
-  const { improveTaskMutation, taskPlanMutation, groupedTasksMutation } =
-    useAiTools();
+  const {
+    improveTaskMutation,
+    improveExistingTaskMutation,
+    taskPlanMutation,
+    groupedTasksMutation,
+  } = useAiTools();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -133,6 +137,20 @@ export default function TasksPage() {
         },
       }
     );
+  }
+
+  function handleImproveExistingTask(taskId: number) {
+    setErrorMessage("");
+
+    improveExistingTaskMutation.mutate(taskId, {
+      onSuccess: (data) => {
+        setEditTitle(data.suggested_title);
+        setEditDescription(data.suggested_description ?? "");
+      },
+      onError: () => {
+        setErrorMessage("Failed to improve task");
+      },
+    });
   }
 
   function applyAiSuggestion() {
@@ -323,6 +341,7 @@ export default function TasksPage() {
         editDueDate={editDueDate}
         editPriority={editPriority}
         isUpdating={updateTaskMutation.isPending}
+        isImprovingExistingTask={improveExistingTaskMutation.isPending}
         onToggleCompleted={(id, completed) =>
           toggleTaskMutation.mutate({ id, completed })
         }
@@ -330,6 +349,7 @@ export default function TasksPage() {
         onCancelEditing={cancelEditing}
         onSaveEdit={saveEdit}
         onDelete={handleDelete}
+        onImproveExistingTask={handleImproveExistingTask}
         onEditTitleChange={setEditTitle}
         onEditDescriptionChange={setEditDescription}
         onEditDueDateChange={setEditDueDate}

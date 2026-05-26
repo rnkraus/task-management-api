@@ -1,11 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
-import { getGroupedTasks, getTaskPlan, improveTask } from "../api";
+import {
+  getGroupedTasks,
+  getTaskPlan,
+  improveExistingTask,
+  improveTask,
+} from "../api";
 
 export function useAiTools() {
   const improveTaskMutation = useMutation({
     mutationFn: improveTask,
     onError: (error) => {
       console.error("Improve task error:", error);
+    },
+  });
+
+  const improveExistingTaskMutation = useMutation({
+    mutationFn: (taskId: number) => improveExistingTask(taskId),
+    onError: (error) => {
+      console.error("Improve existing task error:", error);
     },
   });
 
@@ -25,6 +37,7 @@ export function useAiTools() {
 
   return {
     improveTaskMutation,
+    improveExistingTaskMutation,
     taskPlanMutation,
     groupedTasksMutation,
   };
