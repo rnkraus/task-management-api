@@ -118,7 +118,7 @@ def sort_tasks_for_plan(tasks: list[dict]) -> list[dict]:
             return (
                 1,          # tasks without due date come later
                 999999,     # very large days_until_due
-                priority,
+                -priority,
             )
 
         try:
@@ -137,7 +137,7 @@ def sort_tasks_for_plan(tasks: list[dict]) -> list[dict]:
         return (
             0,                  # tasks with due date first
             days_until_due,     # earlier deadlines first
-            priority,           # high priority first (1 before 2 before 3)
+            -priority,          # high priority first (3 before 2 before 1)
         )
 
     open_tasks = [
@@ -169,6 +169,11 @@ Your job:
 - write a short practical reason for why each task appears in its position in the plan, considering deadlines, priority, dependencies, blocking importance, or estimated effort
 - do not include any text outside JSON
 - do not wrap the JSON in markdown or code blocks
+
+Priority scale:
+- 3 means high priority
+- 2 means medium priority
+- 1 means low priority
 
 Return ONLY valid JSON in this format:
 {{
