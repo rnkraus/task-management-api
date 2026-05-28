@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AiToolsPanel from "../../ai/components/ai-tools-panel";
 import { useAiTools } from "../../ai/hooks/use-ai-tools";
@@ -12,6 +13,7 @@ import { useTaskQuery } from "../hooks/use-tasks";
 
 export default function TasksPage() {
   const currentUserQuery = useCurrentUser();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -195,7 +197,7 @@ export default function TasksPage() {
 
   function handleLogout() {
     localStorage.removeItem("access_token");
-    window.location.href = "/login";
+    navigate("/login");
   }
 
   function formatDateTimeForInput(dateString: string | null) {
