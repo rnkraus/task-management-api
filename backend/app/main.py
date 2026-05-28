@@ -7,6 +7,7 @@ from app.api.users import router as user_router
 from app.api.auth import router as auth_router
 from app.api.ai import router as ai_router
 from app.core.db import get_db
+from app.core.config import settings
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -17,6 +18,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        settings.frontend_url,
     ],
     allow_credentials=True,
     allow_methods=["*"],

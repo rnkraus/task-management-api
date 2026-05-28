@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     secret_key: str
     access_token_expire_minutes: int = 60
     openai_api_key: str
+    frontend_url: str = "http://localhost:5173"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
