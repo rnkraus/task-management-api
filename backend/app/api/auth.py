@@ -6,12 +6,19 @@ from app.core.db import get_db
 from app.schemas.auth import UserRegister, Token
 from app.services.auth_service import register_user, authenticate_user
 from app.core.security import create_access_token
+from app.core.config import settings
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 @router.post("/register")
 def register(data: UserRegister, db: Session = Depends(get_db)):
+    if not settings.registration_enabled:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Registration is disabled",
+        )
+
     try:
         user = register_user(db, data.email, data.name, data.password)
     except ValueError as e:

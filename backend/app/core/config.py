@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60
     openai_api_key: str
     frontend_url: str = "http://localhost:5173"
+    registration_enabled: bool = True
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
