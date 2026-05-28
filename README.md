@@ -81,6 +81,38 @@ This helps organize larger task lists into more manageable sections.
 
 ---
 
+### Screenshots
+
+### Register
+
+![Register](docs/screenshots/03_Registering.png)
+
+### Login
+
+![Login](docs/screenshots/04_Logging_In.png)
+
+### Task Dashboard
+
+![Task Dashboard](docs/screenshots/05_Task_Dashboard.png)
+
+### Edit Task and improve with Ai
+
+![Edit Task](docs/screenshots/13_Result_Improve_Task_With_AI.png)
+
+### Task List
+
+![Task List](docs/screenshots/14_Task_List.png)
+
+## AI Task Plan
+
+![AI Task Plan](docs/screenshots/17_AI_Plan.png)
+
+## AI Plan and Groups
+
+![AI Plan and Task Groups](docs/screenshots/19_AI_Plan_And_Groups.png)
+
+Additional screenshots are available in the `docs/screenshots/` directory.
+
 # Tech Stack
 
 ## Backend
@@ -251,6 +283,8 @@ DATABASE_URL=postgresql://taskuser:your_password_here@localhost:5432/taskdb
 
 SECRET_KEY=your_secret_key_here
 ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+OPENAI_API_KEY=your_openai_key_here
 ```
 
 #### backend/.env.test (for pytest):
@@ -292,11 +326,16 @@ npm install
 npm run dev
 ```
 Frontend runs at:
+
+```text
 http://localhost:5173
+```
 
 Make sure the backend is running at:
 
+```text
 http://localhost:8000
+```
 
 
 ## API Docs (Swagger)
@@ -308,11 +347,17 @@ http://localhost:8000/docs
 Swagger UI provides interactive API documentation.
 
 Steps:
-1. Register a user (`/auth/register`)
-2. Click "Authorize" and log in
-3. Use protected endpoints (e.g. `/tasks`)
+1. Open `POST /auth/register`
+2. Click "Try it out"
+3. Enter the registration data
+4. Click "Execute"
+5. Click "Authorize" in the top right corner
+6. Enter your email in the `username` field
+7. Enter your password
+8. Click "Authorize"
+9. Use protected endpoints such as `/tasks` or `/users/me`
 
-Swagger UI automatically includes the access token after authorization.
+After authorization, Swagger UI automatically includes the access token in protected requests.
 
 ## Admin
 
@@ -375,3 +420,17 @@ docker compose --env-file ./backend/.env up --build
 ```bash
 docker compose --env-file ./backend/.env -f compose.yaml -f compose.dev.yaml up --build
 ```
+
+## Project Status
+
+This project is considered feature-complete for its first version.
+
+There are still possible improvements, such as:
+
+- optimizing AI prompts and output quality
+- saving generated AI plans and task groups
+- adding a calendar view for due tasks
+- adding more tests for edge cases
+- improving UI polish and animations
+
+For now, the project is intentionally kept at this stage and will be used as a completed portfolio project. Future work will continue in separate projects to explore more advanced backend and AI engineering topics.
