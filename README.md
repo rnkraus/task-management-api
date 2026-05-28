@@ -109,7 +109,7 @@ This helps organize larger task lists into more manageable sections.
 
 ## AI Plan and Groups
 
-![AI Plan and Task Groups](docs/screenshots/19_Ai_Plan_And_Groups.png)
+![AI Plan and Task Groups](docs/screenshots/19_Ai_Plan_and_Groups.png)
 
 Additional screenshots are available in the `docs/screenshots/` directory.
 
