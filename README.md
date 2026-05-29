@@ -290,6 +290,8 @@ SECRET_KEY=your_secret_key_here
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 OPENAI_API_KEY=your_openai_key_here
+
+REGISTRATION_ENABLED=true
 ```
 
 #### backend/.env.local (for local tools like Alembic):
@@ -301,6 +303,8 @@ SECRET_KEY=your_secret_key_here
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 OPENAI_API_KEY=your_openai_key_here
+
+REGISTRATION_ENABLED=true
 ```
 
 #### backend/.env.test (for pytest):
@@ -310,6 +314,8 @@ DATABASE_URL=postgresql://taskuser:your_password_here@localhost:5432/taskdb_test
 
 SECRET_KEY=your_secret_key_here
 ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+REGISTRATION_ENABLED=true
 ```
 
 #### frontend/.env.local (Frontend API URL)
