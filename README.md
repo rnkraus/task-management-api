@@ -12,6 +12,22 @@ Built as a production-like backend and AI engineering project with a strong focu
 * CI/CD
 * AI integrations
 
+## Live Demo
+
+Demo login credentials are available on request.
+
+Frontend: https://task-management-api-blush.vercel.app  
+API Docs: https://task-management-api-p0b1.onrender.com/docs
+
+Deployment:
+- Frontend hosted on Vercel
+- Backend API hosted on Render
+- PostgreSQL database hosted on Render
+
+> Note: This project uses free-tier hosting. The backend may take a few seconds to wake up after periods of inactivity. In some cases, the service or database may be paused or unavailable due to free-tier limits.
+
+> Public registration is disabled for the live demo to prevent spam and uncontrolled AI API usage. The app cannot be used without demo login credentials, which can be provided on request. The Swagger API documentation is public for inspection, but endpoints require authentication and cannot be executed without valid login credentials.
+
 ---
 
 # Features
