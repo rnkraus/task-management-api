@@ -33,6 +33,7 @@ def assert_user_response(
     assert body["role"] == role
     assert "created_at" in body
     assert "updated_at" in body
+    assert "hashed_password" not in body
 
 
 def test_register_user():

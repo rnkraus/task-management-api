@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.schemas.auth import UserRegister, Token
+from app.schemas.user import UserResponse
 from app.services.auth_service import register_user, authenticate_user
 from app.core.security import create_access_token
 from app.core.config import settings
@@ -11,7 +12,7 @@ from app.core.config import settings
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@router.post("/register")
+@router.post("/register", response_model=UserResponse)
 def register(data: UserRegister, db: Session = Depends(get_db)):
     if not settings.registration_enabled:
         raise HTTPException(
